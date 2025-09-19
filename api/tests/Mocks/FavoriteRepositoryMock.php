@@ -41,6 +41,13 @@ class FavoriteRepositoryMock implements FavoriteRepositoryInterface
     }));
   }
 
+  public function remove(int $userId, int $movieId): void
+  {
+    $this->favorites = array_values(array_filter($this->favorites, function(Favorite $favorite) use ($userId, $movieId) {
+      return !($favorite->getUserId() === $userId && $favorite->getMovieId() === $movieId);
+    }));
+  }
+
   public function getFavorites(): array
   {
     return $this->favorites;
