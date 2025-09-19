@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\FavoriteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,4 +31,8 @@ Route::prefix('auth')->group(function () {
 Route::prefix('movies')->middleware('auth:api')->group(function () {
     Route::get('search', [MovieController::class, 'search'])->name('movies.search');
     Route::get('genres', [MovieController::class, 'genres'])->name('movies.genres');
+});
+
+Route::prefix('favorites')->middleware('auth:api')->group(function () {
+    Route::post('/', [FavoriteController::class, 'store'])->name('favorites.store');
 });
