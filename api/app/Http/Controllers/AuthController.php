@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Application\UseCases\Auth\UserRegisterUseCase;
 use App\Application\UseCases\Auth\UserLoginUseCase;
+use App\Application\UseCases\Auth\UserLogoutUseCase;
 
 use App\Http\Requests\UserRegisterRequest;
 use App\Http\Requests\UserLoginRequest;
@@ -14,16 +15,28 @@ use Exception;
 
 class AuthController extends Controller
 {
-  protected UserRegisterUseCase $UserRegisterUseCase;
-  protected UserLoginUseCase $UserLoginUseCase;
-
   public function __construct(
-    UserRegisterUseCase $UserRegisterUseCase,
-    UserLoginUseCase $UserLoginUseCase
-  )
+    protected UserRegisterUseCase $UserRegisterUseCase,
+    protected UserLoginUseCase $UserLoginUseCase,
+    protected UserLogoutUseCase $UserLogoutUseCase
+) {}
+
+  public function register(UserRegisterRequest $request)
   {
-    $this->UserRegisterUseCase = $UserRegisterUseCase;
-    $this->UserLoginUseCase = $UserLoginUseCase;
+    try {
+      $user = $this->UserRegisterUseCase->execute(
+        $request->name,
+        $request->email,
+        $request->password
+      );
+
+      return response()->json([
+        'message' => 'Usuário registrado com sucesso!',
+        'user' => $user
+      ], 201);
+    } catch (Exception $e) {
+      return response()->json(['error' => $e->getMessage()], 400);
+    }
   }
 
   public function login(UserLoginRequest $request)
@@ -45,21 +58,19 @@ class AuthController extends Controller
     }
   }
 
-  public function register(UserRegisterRequest $request)
+  public function logout(Request $request)
   {
     try {
-      $user = $this->UserRegisterUseCase->execute(
-        $request->name,
-        $request->email,
-        $request->password
-      );
+      $this->UserLogoutUseCase->execute();
 
       return response()->json([
-        'message' => 'Usuário registrado com sucesso!',
-        'user' => $user
-      ], 201);
+          'message' => 'Logout realizado com sucesso.'
+      ]);
     } catch (Exception $e) {
-      return response()->json(['error' => $e->getMessage()], 400);
+      return response()->json([
+          'error' => 'Erro ao tentar fazer logout.',
+          'details' => $e->getMessage()
+      ], 500);
     }
   }
 }
