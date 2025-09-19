@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MovieController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,4 +24,10 @@ Route::prefix('auth')->group(function () {
     Route::middleware('auth:api')->group(function () {
         Route::post('logout', [AuthController::class, 'logout'])->name('auth.logout');
     });
+});
+
+
+Route::prefix('movies')->middleware('auth:api')->group(function () {
+    Route::get('search', [MovieController::class, 'search'])->name('movies.search');
+    Route::get('genres', [MovieController::class, 'genres'])->name('movies.genres');
 });
