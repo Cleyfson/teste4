@@ -32,6 +32,15 @@ class FavoriteRepositoryMock implements FavoriteRepositoryInterface
     $this->favorites[] = $favorite;
   }
 
+  public function listByUser(int $userId, ?int $genreFilter = null): array
+  {
+    return array_values(array_filter($this->favorites, function(Favorite $favorite) use ($userId, $genreFilter) {
+      $matchesUser = $favorite->getUserId() === $userId;
+      $matchesGenre = $genreFilter === null || in_array($genreFilter, $favorite->getGenreIds());
+      return $matchesUser && $matchesGenre;
+    }));
+  }
+
   public function getFavorites(): array
   {
     return $this->favorites;
