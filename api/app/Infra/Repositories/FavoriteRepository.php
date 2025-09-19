@@ -27,4 +27,23 @@ class FavoriteRepository implements FavoriteRepositoryInterface
       ->where('movie_id', $movieId)
       ->exists();
   }
+
+  public function listByUser(int $userId, ?int $genreFilter = null): array
+  {
+    $query = DB::table('favorites')
+      ->where('user_id', $userId);
+
+    if ($genreFilter !== null) {
+      $query->whereJsonContains('genre_ids', $genreFilter);
+    }
+
+    return $query->get()->map(function ($record) {
+      return (new Favorite())
+        ->setId($record->id)
+        ->setUserId($record->user_id)
+        ->setMovieId($record->movie_id)
+        ->setMovieTitle($record->movie_title)
+        ->setGenreIds(json_decode($record->genre_ids, true));
+    })->all();
+  }
 }

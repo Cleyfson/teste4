@@ -22,7 +22,7 @@ class FavoriteAddUseCase
       ->setUserId($userId)
       ->setMovieId($movieId)
       ->setMovieTitle($movieTitle)
-      ->setGenreIdss($genreIds);
+      ->setGenreIds($genreIds);
 
     $this->repository->add($favorite);
   }
