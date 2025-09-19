@@ -9,7 +9,8 @@ services:
     restart: unless-stopped
     working_dir: /var/www
     volumes:
-      - ./api:/var/www
+        - ./api:/var/www
+        - /var/www/vendor 
     networks:
       - laravel
     command: >
@@ -54,6 +55,7 @@ services:
     working_dir: /app
     volumes:
       - ./frontend:/app
+      - /app/node_modules
     ports:
       - "5173:5173"
     networks:
