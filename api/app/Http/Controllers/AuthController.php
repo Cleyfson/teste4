@@ -19,7 +19,7 @@ class AuthController extends Controller
     protected UserRegisterUseCase $UserRegisterUseCase,
     protected UserLoginUseCase $UserLoginUseCase,
     protected UserLogoutUseCase $UserLogoutUseCase
-) {}
+  ) {}
 
   public function register(UserRegisterRequest $request)
   {
