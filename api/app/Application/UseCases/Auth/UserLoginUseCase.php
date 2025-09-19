@@ -21,7 +21,7 @@ class UserLoginUseCase
         $user = $this->userRepository->findByEmail($email);
 
         if (!$user || !$user->verifyPassword($password)) {
-            throw new \Exception("Credenciais inválidas");
+            throw new \Exception("Credenciais inválidas.");
         }
 
         return JWTAuth::fromUser($user);
