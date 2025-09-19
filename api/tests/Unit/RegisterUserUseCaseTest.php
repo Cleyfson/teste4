@@ -2,27 +2,27 @@
 
 namespace Tests\Unit;
 
-use App\Application\UseCases\Auth\RegisterUserUseCase;
+use App\Application\UseCases\Auth\UserRegisterUseCase;
 use App\Domain\Entities\User;
 use Tests\Mocks\UserRepositoryMock;
 use Tests\TestCase;
 
-class RegisterUserUseCaseTest extends TestCase
+class UserRegisterUseCaseTest extends TestCase
 {
     private UserRepositoryMock $userRepositoryMock;
-    private RegisterUserUseCase $registerUserUseCase;
+    private UserRegisterUseCase $UserRegisterUseCase;
 
     protected function setUp(): void
     {
         parent::setUp();
         
         $this->userRepositoryMock = new UserRepositoryMock();
-        $this->registerUserUseCase = new RegisterUserUseCase($this->userRepositoryMock);
+        $this->UserRegisterUseCase = new UserRegisterUseCase($this->userRepositoryMock);
     }
 
     public function test_register_new_user_successfully()
     {
-        $user = $this->registerUserUseCase->execute(
+        $user = $this->UserRegisterUseCase->execute(
             'John Doe',
             'john@example.com',
             'password123'
@@ -39,7 +39,7 @@ class RegisterUserUseCaseTest extends TestCase
 
     public function test_register_with_existing_email_throws_exception()
     {
-        $this->registerUserUseCase->execute(
+        $this->UserRegisterUseCase->execute(
             'Existing User',
             'existing@example.com',
             'password123'
@@ -48,7 +48,7 @@ class RegisterUserUseCaseTest extends TestCase
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('E-mail já está em uso.');
 
-        $this->registerUserUseCase->execute(
+        $this->UserRegisterUseCase->execute(
             'New User',
             'existing@example.com',
             'newpassword'

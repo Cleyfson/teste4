@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Application\UseCases\Auth\RegisterUserUseCase;
-use App\Http\Requests\RegisterUserRequest;
+use App\Application\UseCases\Auth\UserRegisterUseCase;
+use App\Application\UseCases\Auth\UserLoginUseCase;
+
+use App\Http\Requests\UserRegisterRequest;
+use App\Http\Requests\UserLoginRequest;
 
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
@@ -11,19 +14,41 @@ use Exception;
 
 class AuthController extends Controller
 {
-  protected RegisterUserUseCase $registerUserUseCase;
+  protected UserRegisterUseCase $UserRegisterUseCase;
+  protected UserLoginUseCase $UserLoginUseCase;
 
   public function __construct(
-    RegisterUserUseCase $registerUserUseCase    
+    UserRegisterUseCase $UserRegisterUseCase,
+    UserLoginUseCase $UserLoginUseCase
   )
   {
-    $this->registerUserUseCase = $registerUserUseCase;
+    $this->UserRegisterUseCase = $UserRegisterUseCase;
+    $this->UserLoginUseCase = $UserLoginUseCase;
   }
 
-  public function register(RegisterUserRequest $request)
+  public function login(UserLoginRequest $request)
   {
     try {
-      $user = $this->registerUserUseCase->execute(
+      $data = $this->UserLoginUseCase->execute(
+        $request->email, 
+        $request->password
+      );
+      
+      return response()->json([
+          'access_token' => $data,
+          'token_type' => 'bearer',
+          'expires_in' => auth()->factory()->getTTL() * 60
+      ]);
+        
+    } catch (Exception $e) {
+      return response()->json(['error' => $e->getMessage()], 401);
+    }
+  }
+
+  public function register(UserRegisterRequest $request)
+  {
+    try {
+      $user = $this->UserRegisterUseCase->execute(
         $request->name,
         $request->email,
         $request->password

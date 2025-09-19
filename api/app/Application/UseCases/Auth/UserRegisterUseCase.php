@@ -6,7 +6,7 @@ use App\Domain\Repositories\UserRepositoryInterface;
 use App\Domain\Entities\User;
 use Exception;
 
-class RegisterUserUseCase
+class UserRegisterUseCase
 {
     private UserRepositoryInterface $userRepository;
 
