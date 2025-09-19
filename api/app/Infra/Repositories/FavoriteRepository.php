@@ -46,4 +46,12 @@ class FavoriteRepository implements FavoriteRepositoryInterface
         ->setGenreIds(json_decode($record->genre_ids, true));
     })->all();
   }
+
+  public function remove(int $userId, int $movieId): void
+  {
+    DB::table('favorites')
+      ->where('user_id', $userId)
+      ->where('movie_id', $movieId)
+      ->delete();
+  }
 }

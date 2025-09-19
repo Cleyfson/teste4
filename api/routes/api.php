@@ -36,4 +36,5 @@ Route::prefix('movies')->middleware('auth:api')->group(function () {
 Route::prefix('favorites')->middleware('auth:api')->group(function () {
     Route::post('/', [FavoriteController::class, 'store'])->name('favorites.store');
     Route::get('/', [FavoriteController::class, 'index'])->name('favorites.index');
+    Route::delete('/', [FavoriteController::class, 'destroy'])->name('favorites.destroy');
 });
