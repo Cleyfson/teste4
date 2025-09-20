@@ -8,7 +8,7 @@ class MovieSearchUseCase
 {
     public function __construct(protected MovieProviderInterface $provider) {}
 
-    public function execute(string $query): array
+    public function execute(string|null $query): array
     {
         return $this->provider->searchMovies($query);
     }

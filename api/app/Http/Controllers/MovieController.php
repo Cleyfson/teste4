@@ -18,11 +18,11 @@ class MovieController extends Controller
     try {
       $query = $request->query('q');
   
-      if (!$query) {
-        return response()->json([
-          'error' => 'Parâmetro de busca obrigatório'
-        ], 422);
-      }
+      // if (!$query) {
+      //   return response()->json([
+      //     'error' => 'Parâmetro de busca obrigatório'
+      //   ], 422);
+      // }
   
       $movies = $this->MovieSearchUseCase->execute($query);
       return response()->json($movies);

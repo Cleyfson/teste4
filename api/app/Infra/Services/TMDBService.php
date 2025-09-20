@@ -26,7 +26,7 @@ class TMDBService implements MovieProviderInterface
     return Http::withHeaders($headers)->$method("{$this->apiUrl}/{$endpoint}", $params);
   }
 
-  public function searchMovies(string $query): array
+  public function searchMovies(string|null $query): array
   {
     $response = $this->makeRequest('get', 'search/movie', [
       'query' => $query,
