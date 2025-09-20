@@ -52,4 +52,17 @@ class TMDBService implements MovieProviderInterface
 
     throw new \Exception("Erro ao buscar gêneros no TMDB.");
   }
+
+  public function getMovieDetails(int $movieId): array
+  {
+      $response = $this->makeRequest('get', "movie/{$movieId}", [
+          'language' => 'pt-BR',
+      ]);
+
+      if ($response->successful()) {
+          return $response->json();
+      }
+
+      throw new \Exception("Erro ao buscar detalhes do filme com ID {$movieId} no TMDB.");
+  }
 }

@@ -31,6 +31,7 @@ Route::prefix('auth')->group(function () {
 Route::prefix('movies')->middleware('auth:api')->group(function () {
     Route::get('search', [MovieController::class, 'search'])->name('movies.search');
     Route::get('genres', [MovieController::class, 'genres'])->name('movies.genres');
+    Route::get('{id}', [MovieController::class, 'show'])->name('movies.show');
 });
 
 Route::prefix('favorites')->middleware('auth:api')->group(function () {
