@@ -1,11 +1,11 @@
 <template>
-  <div class="flex items-center justify-between w-full">
+  <div class="flex items-center justify-end w-full">
     <div class="relative">
-      <label for="genre-select" class="block text-sm font-medium text-gray-700">Escolha o gênero:</label>
+      <label for="genre-select" class="block mb-2 text-sm font-medium text-gray-900">Escolha o gênero:</label>
       <select
         id="genre-select"
         v-model="selectedGenreId"
-        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         @change="handleGenreChange"
       >
         <option value="">Selecione um gênero</option>
