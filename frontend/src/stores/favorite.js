@@ -8,12 +8,12 @@ export const useFavoriteStore = defineStore('favorites', {
   }),
 
   actions: {
-    async fetchFavorites() {
+    async fetchFavorites(params = {}) {
       const { api } = useApi();
       const { notifyError } = useToast();
-
+    
       try {
-        const response = await api.get('favorites');
+        const response = await api.get('favorites', { params });
         this.favorites = response.data;
       } catch (error) {
         notifyError('Erro ao buscar favoritos:', error.response?.data?.message || error.message);

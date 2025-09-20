@@ -40,7 +40,7 @@ class FavoriteController extends Controller
 
       $favorites = $this->FavoriteListUseCase->execute($userId, $genreFilter);
 
-      return response()->json(['favorites' => $favorites]);
+      return response()->json($favorites);
     } catch (Exception $e) {
       return response()->json(['error' => $e->getMessage()], 400);
     }
