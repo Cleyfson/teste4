@@ -22,9 +22,7 @@ class FavoriteController extends Controller
     try {
       $this->FavoriteAddUseCase->execute(
         auth()->id(),
-        $request->movie_id,
-        $request->movie_title,
-        $request->genre_ids
+        $request->movie_id
       );
 
       return response()->json(['message' => 'Filme adicionado aos favoritos.'], 201);
@@ -32,6 +30,7 @@ class FavoriteController extends Controller
       return response()->json(['error' => $e->getMessage()], 400);
     }
   }
+  
 
   public function index(Request $request)
   {

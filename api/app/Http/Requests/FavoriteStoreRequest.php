@@ -23,8 +23,6 @@ class FavoriteStoreRequest extends FormRequest
   {
     return [
       'movie_id' => 'required|integer',
-      'movie_title' => 'required|string',
-      'genre_ids' => 'required|array',
     ];
 }
 

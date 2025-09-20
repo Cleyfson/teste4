@@ -14,11 +14,16 @@ class FavoriteRepository implements FavoriteRepositoryInterface
       'user_id' => $favorite->getUserId(),
       'movie_id' => $favorite->getMovieId(),
       'movie_title' => $favorite->getMovieTitle(),
+      'original_title' => $favorite->getOriginalTitle(),
+      'overview' => $favorite->getOverview(),
+      'poster_path' => $favorite->getPosterPath(),
+      'release_date' => $favorite->getReleaseDate(),
       'genre_ids' => json_encode($favorite->getGenreIds()),
       'created_at' => now(),
       'updated_at' => now(),
     ]);
   }
+  
 
   public function exists(int $userId, int $movieId): bool
   {
@@ -31,19 +36,23 @@ class FavoriteRepository implements FavoriteRepositoryInterface
   public function listByUser(int $userId, ?int $genreFilter = null): array
   {
     $query = DB::table('favorites')
-      ->where('user_id', $userId);
+        ->where('user_id', $userId);
 
     if ($genreFilter !== null) {
-      $query->whereJsonContains('genre_ids', $genreFilter);
+        $query->whereJsonContains('genre_ids', $genreFilter);
     }
 
     return $query->get()->map(function ($record) {
-      return (new Favorite())
-        ->setId($record->id)
-        ->setUserId($record->user_id)
-        ->setMovieId($record->movie_id)
-        ->setMovieTitle($record->movie_title)
-        ->setGenreIds(json_decode($record->genre_ids, true));
+        return (new Favorite())
+            ->setId($record->id)
+            ->setUserId($record->user_id)
+            ->setMovieId($record->movie_id)
+            ->setMovieTitle($record->movie_title)
+            ->setOriginalTitle($record->original_title)
+            ->setOverview($record->overview)
+            ->setPosterPath($record->poster_path)
+            ->setReleaseDate($record->release_date)
+            ->setGenreIds(json_decode($record->genre_ids, true));
     })->all();
   }
 
