@@ -26,6 +26,7 @@
       <div class="flex items-center opacity-0 group-hover:opacity-100 transition-opacity gap-4">
         <button 
           class="text-blue-600 hover:text-blue-800"
+          @click.stop="favoriteStore.addFavorite(movie.id)"
         >
           <Heart class="h-8 w-8 text-gray-400" />
         </button>
@@ -38,6 +39,9 @@
 import { computed } from 'vue';
 import { LucideFilm } from 'lucide-vue-next';
 import { Heart } from 'lucide-vue-next';
+import { useFavoriteStore } from '@/stores/favorite';
+
+const favoriteStore = useFavoriteStore();
 
 const props = defineProps({
   movie: {
