@@ -25,12 +25,19 @@
         </span>
       </div>
     </td>
-    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-4">
       <button 
         class="text-indigo-600 hover:text-indigo-900"
         @click="$emit('show-details', movie.movie_id)"
       >
         Ver detalhes
+      </button>
+
+      <button 
+        class="text-red-600 hover:text-red-800"
+        @click="favoriteStore.removeFavorite(movie.movie_id)"
+      >
+        Remover
       </button>
     </td>
   </tr>
@@ -38,8 +45,10 @@
 
 <script setup>
 import { useMovieStore } from '@/stores/movie';
+import { useFavoriteStore } from '@/stores/favorite';
 
 const movieStore = useMovieStore();
+const favoriteStore = useFavoriteStore();
 
 defineProps({
   movie: {
