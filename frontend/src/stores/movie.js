@@ -5,16 +5,13 @@ import { useToast } from '@/composables/useToast';
 export const useMovieStore = defineStore('movies', {
   state: () => ({
     movies: [],
-    isLoading: false,
   }),
 
   actions: {
     async fetchMovies(searchTerm = 'batman') {
       const { api } = useApi();
       const { notifyError } = useToast();
-      
-      this.isLoading = true;
-      
+            
       try {
         const response = await api.get('movies/search', {
           params: { q: searchTerm } 
@@ -24,8 +21,19 @@ export const useMovieStore = defineStore('movies', {
       } catch (error) {
         notifyError('Erro ao buscar filmes:', error.response?.data?.message || error.message);
         this.movies = [];
-      } finally {
-        this.isLoading = false;
+      }
+    },
+
+    async fetchMovie(id) {
+      const { api } = useApi();
+      const { notifyError } = useToast();
+
+      try {
+        const response = await api.get(`movies/${id}`);
+
+        return response.data;
+      } catch (error) {
+        notifyError('Erro ao buscar filme:' + (error.response?.data?.message || error));
       }
     },
   },
