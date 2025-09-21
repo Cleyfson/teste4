@@ -22,7 +22,7 @@ Antes de rodar o projeto, é necessário ter as seguintes ferramentas instaladas
 Primeiro, clone o repositório para sua máquina local:
 
 ```bash
-  git https://github.com/Cleyfson/kinghost-test
+  git clone https://github.com/Cleyfson/kinghost-test
   cd kinghost-test
 ```
 
@@ -55,7 +55,7 @@ cd kinghost-test
 
 ### 2.1 Configuração da API (Backend)
 
-Navegue até o diretório `api`:
+Navegue até o diretório `api` e copie o .env-example:
 
 ```bash
 cd api
@@ -63,7 +63,7 @@ cp .env.example .env
 ```
 
 ### 2.2 Configuração do Frontend
-Navegue até o diretório `frontend`:
+Navegue até o diretório `frontend` e copie o .env-example:
 
 ```bash
 cd fronted
