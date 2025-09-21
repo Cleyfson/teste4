@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { useApi } from '@/composables/useApi';
 import { useToast } from '@/composables/useToast';
+import { useLoading } from '@/composables/useLoading';
 
 export const useMovieStore = defineStore('movies', {
   state: () => ({
@@ -21,7 +22,10 @@ export const useMovieStore = defineStore('movies', {
     async fetchMovies(searchTerm = 'batman') {
       const { api } = useApi();
       const { notifyError } = useToast();
-            
+      const loading = useLoading();
+
+      loading.start();
+
       try {
         const response = await api.get('movies/search', {
           params: { q: searchTerm } 
@@ -31,12 +35,17 @@ export const useMovieStore = defineStore('movies', {
       } catch (error) {
         notifyError('Erro ao buscar filmes:', error.response?.data?.message || error.message);
         this.movies = [];
+      } finally {
+        loading.stop();
       }
     },
 
     async fetchMovie(id) {
       const { api } = useApi();
       const { notifyError } = useToast();
+      const loading = useLoading();
+
+      loading.start();
 
       try {
         const response = await api.get(`movies/${id}`);
@@ -44,12 +53,17 @@ export const useMovieStore = defineStore('movies', {
         return response.data;
       } catch (error) {
         notifyError('Erro ao buscar filme:' + (error.response?.data?.message || error));
+      } finally {
+        loading.stop();
       }
     },
 
     async fetchGenres() {
       const { api } = useApi();
       const { notifyError } = useToast();
+      const loading = useLoading();
+
+      loading.start();
       
       try {
         const response = await api.get('/movies/genres');
@@ -57,6 +71,8 @@ export const useMovieStore = defineStore('movies', {
         this.genres = response.data;
       } catch (error) {
         notifyError('Erro ao buscar gêneros:', error);
+      } finally {
+        loading.stop();
       }
     },
   },

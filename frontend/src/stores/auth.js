@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { useApi } from '@/composables/useApi';
 import { useToast } from '@/composables/useToast';
+import { useLoading } from '@/composables/useLoading';
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -25,6 +26,9 @@ export const useAuthStore = defineStore('auth', {
     async login(credentials) {
       const { api } = useApi();
       const { notifyError } = useToast();
+      const loading = useLoading();
+
+      loading.start();
 
       try {
         const response = await api.post('/auth/login', credentials);
@@ -34,13 +38,18 @@ export const useAuthStore = defineStore('auth', {
       } catch (error) {
         notifyError('Erro ao fazer login:' + (error.response?.data?.message || error));
         throw error.response?.data?.message || error;
+      } finally {
+        loading.stop();
       }
     },
 
     async register(credentials) {
       const { api } = useApi();
       const { notifyError } = useToast();
-    
+      const loading = useLoading();
+
+      loading.start();
+
       try {
         const response = await api.post('/auth/register', credentials);
 
@@ -49,19 +58,26 @@ export const useAuthStore = defineStore('auth', {
         const message = error.response?.data?.error || error.response?.data?.message || 'Erro desconhecido';
         notifyError('Erro ao registrar: ' + message);
         throw message;
+      } finally {
+        loading.stop();
       }
     },
       
     async logout() {
       const { api } = useApi();
       const { notifyError } = useToast();
-      
+      const loading = useLoading();
+
+      loading.start();
+
       try {
         await api.post('/auth/logout');
 
         this.clearToken();
       } catch (error) {
         notifyError('Erro ao deslogar:' + (error.response?.data?.message || error));
+      } finally {
+        loading.stop();
       }
     },
   },
