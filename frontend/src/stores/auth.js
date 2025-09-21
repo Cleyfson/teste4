@@ -37,6 +37,21 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
+    async register(credentials) {
+      const { api } = useApi();
+      const { notifyError } = useToast();
+    
+      try {
+        const response = await api.post('/auth/register', credentials);
+
+        return response.data;
+      } catch (error) {
+        const message = error.response?.data?.error || error.response?.data?.message || 'Erro desconhecido';
+        notifyError('Erro ao registrar: ' + message);
+        throw message;
+      }
+    },
+      
     async logout() {
       const { api } = useApi();
       const { notifyError } = useToast();
