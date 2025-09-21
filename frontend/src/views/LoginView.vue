@@ -51,7 +51,6 @@ import { useAuthStore } from '@/stores/auth';
 import { useRouter } from 'vue-router';
 import { useToast } from '@/composables/useToast';
 import * as yup from 'yup'
-import { ref } from 'vue';
 
 const authStore = useAuthStore();
 const router = useRouter();
