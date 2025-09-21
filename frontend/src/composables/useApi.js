@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useAuthStore } from '@/stores/auth';
+import { useRouter } from 'vue-router';
 
 export function useApi() {
   const api = axios.create({
@@ -22,10 +23,12 @@ export function useApi() {
     (response) => response,
     (error) => {
       const authStore = useAuthStore();
+      const router = useRouter();
 
       if (error.response?.status === 401) {
         console.warn('Token expirado ou inválido. Realizando logout automático.');
         authStore.clearToken();
+        router.push({ name: 'login' });
       }
 
       console.error('Erro na API:', error);
