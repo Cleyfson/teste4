@@ -25,19 +25,21 @@
         </span>
       </div>
     </td>
-    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-4">
+    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
       <button 
-        class="text-indigo-600 hover:text-indigo-900"
+        class="inline-flex items-center justify-center w-10 h-10 rounded bg-blue-600 hover:bg-blue-700 text-white"
         @click="$emit('show-details', movie.movie_id)"
+        title="Ver detalhes"
       >
-        Ver detalhes
+        <Eye class="w-5 h-5" />
       </button>
 
       <button 
-        class="text-red-600 hover:text-red-800"
+        class="inline-flex items-center justify-center w-10 h-10 rounded bg-red-600 hover:bg-red-700 text-white"
         @click="favoriteStore.removeFavorite(movie.movie_id)"
+        title="Remover"
       >
-        Remover
+        <Trash2 class="w-5 h-5" />
       </button>
     </td>
   </tr>
@@ -46,6 +48,7 @@
 <script setup>
 import { useMovieStore } from '@/stores/movie';
 import { useFavoriteStore } from '@/stores/favorite';
+import { Eye, Trash2 } from 'lucide-vue-next';
 
 const movieStore = useMovieStore();
 const favoriteStore = useFavoriteStore();

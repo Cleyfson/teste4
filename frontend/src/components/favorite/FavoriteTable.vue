@@ -31,15 +31,39 @@
         </template>
       </tbody>
     </table>
+
+    <MovieDetailsModal 
+      v-if="isMovieModalOpen" 
+      :movie="selectedMovie"
+      @close="closeMovieModal"
+    />
   </div>
 </template>
 
 <script setup>
+  import { ref } from 'vue';
   import { useFavoriteStore } from '@/stores/favorite';
+  import { useMovieStore } from '@/stores/movie';
   import { LucidePlus } from 'lucide-vue-next';
   import FavoriteTableHeader from './FavoriteTableHeader.vue';
   import FavoriteTableRow from './FavoriteTableRow.vue';
+  import MovieDetailsModal from '../movie/MovieDetailsModal.vue';
   import BookOpen from '@/assets/svg/book_open1.svg';
 
   const favoriteStore = useFavoriteStore();
+  const movieStore = useMovieStore();
+
+  const isMovieModalOpen = ref(false);
+  const selectedMovie = ref(null);
+
+  const showMovieDetails = async (id) => {
+    const movie = await movieStore.fetchMovie(id);
+    selectedMovie.value = movie;
+    isMovieModalOpen.value = true;
+  };
+
+  const closeMovieModal = () => {
+    isMovieModalOpen.value = false;
+    selectedMovie.value = null;
+  };
 </script>
