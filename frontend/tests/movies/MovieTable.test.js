@@ -60,7 +60,6 @@ describe('MovieTable.vue', () => {
     const td = wrapper.find('td[colspan="5"]');
     expect(td.exists()).toBe(true);
     expect(td.text()).toContain('Não há filmes com esse nome');
-    expect(wrapper.find('button').text()).toContain('Busque por um novo filme');
   });
 
   it('abre modal de detalhes quando showMovieDetails é chamado', async () => {

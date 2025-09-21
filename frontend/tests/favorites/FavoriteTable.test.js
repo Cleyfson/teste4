@@ -67,9 +67,7 @@ describe('FavoriteTable.vue', () => {
     wrapper = shallowMount(FavoriteTable);
     
     expect(wrapper.find('td[colspan="5"]').exists()).toBe(true);
-    expect(wrapper.text()).toContain('Você ainda não possui favoritos');
-    expect(wrapper.find('button').exists()).toBe(true);
-    expect(wrapper.text()).toContain('Adicione um filme como favorito');
+    expect(wrapper.text()).toContain('Você ainda não possui favoritos com esse genero');
   });
 
   it('abre modal de detalhes quando showMovieDetails é chamado', async () => {

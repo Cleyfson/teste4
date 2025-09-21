@@ -157,9 +157,10 @@ Frontend (Vue.js): http://localhost:5173
 ## Testes automatizados
 
 Para rodar os testes automatizados execute o seguinte comando no root do projeto
-
+```bash
 docker exec laravel_app php artisan test
 docker exec vue_frontend npm run test:unit
+```
 
 ## Interface da Aplicação
 
