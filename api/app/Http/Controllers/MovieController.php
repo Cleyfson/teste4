@@ -20,16 +20,10 @@ class MovieController extends Controller
     try {
       $query = $request->query('q');
   
-      // if (!$query) {
-      //   return response()->json([
-      //     'error' => 'Parâmetro de busca obrigatório'
-      //   ], 422);
-      // }
-  
       $movies = $this->MovieSearchUseCase->execute($query);
       return response()->json($movies);
     } catch (Exception $e) {
-      return response()->json(['error' => $e->getMessage()], 400);
+      return response()->json(['message' => $e->getMessage()], 400);
     }
   }
 
@@ -39,7 +33,7 @@ class MovieController extends Controller
       $genres = $this->MovieGetGenresUseCase->execute();
       return response()->json($genres);
     } catch (Exception $e) {
-      return response()->json(['error' => $e->getMessage()], 400);
+      return response()->json(['message' => $e->getMessage()], 400);
     }
   }
 
@@ -49,7 +43,7 @@ class MovieController extends Controller
       $movie = $this->MovieGetDetailsUseCase->execute($id);
       return response()->json($movie);
     } catch (Exception $e) {
-      return response()->json(['error' => $e->getMessage()], 400);
+      return response()->json(['message' => $e->getMessage()], 400);
     }
   }
 }

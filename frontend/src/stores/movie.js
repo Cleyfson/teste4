@@ -33,7 +33,7 @@ export const useMovieStore = defineStore('movies', {
 
         this.movies = response.data;
       } catch (error) {
-        notifyError('Erro ao buscar filmes:', error.response?.data?.message || error.message);
+        notifyError('Erro ao buscar filmes:' + error.response?.data?.message || error.message);
         this.movies = [];
       } finally {
         loading.stop();
@@ -52,7 +52,7 @@ export const useMovieStore = defineStore('movies', {
 
         return response.data;
       } catch (error) {
-        notifyError('Erro ao buscar filme:' + (error.response?.data?.message || error));
+        notifyError('Erro ao buscar filme:' + (error.response?.data?.message || error.message));
       } finally {
         loading.stop();
       }
@@ -70,7 +70,7 @@ export const useMovieStore = defineStore('movies', {
 
         this.genres = response.data;
       } catch (error) {
-        notifyError('Erro ao buscar gêneros:', error);
+        notifyError('Erro ao buscar gêneros:', (error.response?.data?.message || error.message));
       } finally {
         loading.stop();
       }

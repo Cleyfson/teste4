@@ -35,7 +35,7 @@ class AuthController extends Controller
         'user' => $user
       ], 201);
     } catch (Exception $e) {
-      return response()->json(['error' => $e->getMessage()], 400);
+      return response()->json(['message' => $e->getMessage()], 400);
     }
   }
 
@@ -54,7 +54,7 @@ class AuthController extends Controller
       ]);
         
     } catch (Exception $e) {
-      return response()->json(['error' => $e->getMessage()], 401);
+      return response()->json(['message' => $e->getMessage()], 401);
     }
   }
 
@@ -68,7 +68,7 @@ class AuthController extends Controller
       ]);
     } catch (Exception $e) {
       return response()->json([
-          'error' => 'Erro ao tentar fazer logout.',
+          'message' => 'Erro ao tentar fazer logout.',
           'details' => $e->getMessage()
       ], 500);
     }

@@ -20,7 +20,7 @@ export const useFavoriteStore = defineStore('favorites', {
         const response = await api.get('favorites', { params });
         this.favorites = response.data;
       } catch (error) {
-        notifyError('Erro ao buscar favoritos:', error.response?.data?.message || error.message);
+        notifyError('Erro ao buscar favoritos:' + error.response?.data?.message || error.message);
         this.favorites = [];
       } finally {
         loading.stop();
@@ -40,7 +40,7 @@ export const useFavoriteStore = defineStore('favorites', {
         await this.fetchFavorites();
         return response.data;
       } catch (error) {
-        notifyError('Erro ao adicionar favorito:', error.response?.data?.message || error.message);
+        notifyError('Erro ao adicionar favorito:' + error.response?.data?.message || error.message);
       } finally {
         loading.stop();
       }
@@ -58,7 +58,7 @@ export const useFavoriteStore = defineStore('favorites', {
         await this.fetchFavorites();
         return response.data;
       } catch (error) {
-        notifyError('Erro ao remover favorito:', error.response?.data?.message || error.message);
+        notifyError('Erro ao remover favorito:' + error.response?.data?.message || error.message);
       } finally {
         loading.stop();
       }

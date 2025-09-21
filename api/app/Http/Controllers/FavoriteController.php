@@ -27,7 +27,7 @@ class FavoriteController extends Controller
 
       return response()->json(['message' => 'Filme adicionado aos favoritos.'], 201);
     } catch (Exception $e) {
-      return response()->json(['error' => $e->getMessage()], 400);
+      return response()->json(['message' => $e->getMessage()], 400);
     }
   }
   
@@ -42,7 +42,7 @@ class FavoriteController extends Controller
 
       return response()->json($favorites);
     } catch (Exception $e) {
-      return response()->json(['error' => $e->getMessage()], 400);
+      return response()->json(['message' => $e->getMessage()], 400);
     }
   }
 
@@ -56,7 +56,7 @@ class FavoriteController extends Controller
 
       return response()->json(['message' => 'Filme removido dos favoritos.']);
     } catch (Exception $e) {
-      return response()->json(['error' => $e->getMessage()], 400);
+      return response()->json(['message' => $e->getMessage()], 400);
     }
   }
 }
