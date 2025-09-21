@@ -17,12 +17,16 @@ jobs:
 
       - name: Install Composer dependencies
         run: composer install --no-progress --prefer-dist
+        working-directory: ./api
 
       - name: Copy .env
         run: cp .env.example .env
+        working-directory: ./api
 
       - name: Generate app key
         run: php artisan key:generate
+        working-directory: ./api
 
       - name: Run unit tests
         run: php artisan test
+        working-directory: ./api
